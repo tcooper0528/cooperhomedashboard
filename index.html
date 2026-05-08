@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tim's Home · Personal Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold:        #d4a843;
+      --gold-glow:   rgba(212,168,67,0.18);
+      --clay:        #c4a882;
+      --earth:       #8b6f47;
+      --bark:        #5c4430;
+      --deep:        #2e1f0f;
+      --glass:       rgba(255,245,220,0.08);
+      --glass-hover: rgba(255,245,220,0.15);
+      --border:      rgba(196,168,130,0.18);
+      --border-warm: rgba(196,168,130,0.38);
+      --text-bright: #fdf6e8;
+      --text-mid:    rgba(253,246,232,0.68);
+      --text-dim:    rgba(253,246,232,0.38);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Raleway', sans-serif; min-height: 100vh; overflow-x: hidden; color: var(--text-bright); }
+
+    /* ── BACKGROUND ── */
+    .bg { position: fixed; inset: 0; z-index: 0; }
+    .bg-grad {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 110% 70% at 50% -5%, #3d2510 0%, transparent 55%),
+        radial-gradient(ellipse 70% 55% at 0% 100%, #1a0d05 0%, transparent 50%),
+        radial-gradient(ellipse 55% 45% at 100% 80%, #2a1508 0%, transparent 50%),
+        linear-gradient(155deg, #1c0e05 0%, #2e1a08 35%, #1a0c04 65%, #0f0804 100%);
+    }
+    .bg-texture {
+      position: absolute; inset: 0; opacity: 0.05;
+      background-image: repeating-linear-gradient(45deg, rgba(196,168,130,0.4) 0px, rgba(196,168,130,0.4) 1px, transparent 1px, transparent 14px);
+    }
+    .bg-vignette {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 85% 75% at 50% 42%, transparent 25%, rgba(8,4,1,0.60) 100%);
+    }
+    .bg-cross {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center; pointer-events: none;
+    }
+    .cross-wrap { position: relative; animation: breathe 7s ease-in-out infinite; }
+    @keyframes breathe { 0%,100% { opacity:.25; transform:scale(1); } 50% { opacity:.40; transform:scale(1.05); } }
+    .cross-glow {
+      position: absolute; inset: -80px;
+      background: radial-gradient(ellipse at center, rgba(212,168,67,0.16) 0%, transparent 65%);
+      border-radius: 50%;
+    }
+    .cross-svg { width: 500px; height: 500px; filter: drop-shadow(0 0 36px rgba(212,168,67,0.22)); }
+    .bg-band {
+      position: absolute; left: 0; right: 0; top: 36%; height: 280px;
+      background: linear-gradient(180deg, transparent, rgba(212,168,67,0.035) 40%, transparent);
+      pointer-events: none;
+    }
+
+    /* ── HEADER ── */
+    header { position: relative; z-index: 10; text-align: center; padding: 3rem 2rem 1rem; }
+    .clock-time {
+      font-family: 'Cormorant Garamond', serif; font-size: 5rem; font-weight: 300;
+      color: var(--text-bright); letter-spacing: -0.02em; line-height: 1;
+      text-shadow: 0 2px 28px rgba(0,0,0,0.5);
+    }
+    .clock-sec { font-size: 2rem; color: var(--text-dim); margin-left: 3px; }
+    .clock-ampm { font-family:'Raleway',sans-serif; font-size:1rem; font-weight:600; letter-spacing:.22em; text-transform:uppercase; color:var(--text-mid); margin-left:8px; }
+    .clock-date { font-size:.72rem; font-weight:600; letter-spacing:.28em; text-transform:uppercase; color:var(--text-dim); margin-top:.5rem; }
+
+    /* ── VERSE ── */
+    .verse-wrap { position:relative; z-index:10; max-width:660px; margin:1.5rem auto 0; padding:0 2rem; text-align:center; }
+    .verse-icon {
+      display:inline-flex; align-items:center; justify-content:center;
+      width:42px; height:42px; background:var(--glass); border:1px solid var(--border-warm);
+      border-radius:50%; margin-bottom:1.1rem; backdrop-filter:blur(8px);
+    }
+    .verse-icon svg { width:17px; height:17px; stroke:var(--gold); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .verse-text {
+      font-family:'Cormorant Garamond',serif; font-size:1.85rem; font-style:italic;
+      font-weight:400; line-height:1.58; color:var(--text-bright);
+      text-shadow:0 2px 18px rgba(0,0,0,0.4); transition:opacity .45s; min-height:88px;
+    }
+    .verse-ref { margin-top:.65rem; font-size:.7rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); }
+    .verse-btn {
+      margin-top:.9rem; display:inline-flex; align-items:center; gap:.35rem;
+      background:transparent; border:1px solid var(--border-warm); border-radius:20px;
+      padding:5px 14px; font-family:'Raleway',sans-serif; font-size:.63rem; font-weight:600;
+      letter-spacing:.14em; text-transform:uppercase; color:var(--text-dim); cursor:pointer; transition:all .2s;
+    }
+    .verse-btn:hover { color:var(--gold); border-color:var(--gold); }
+    .verse-btn.spinning svg { animation:spin 1s linear infinite; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+
+    /* ── WEATHER ── */
+    .weather-row { position:relative; z-index:10; max-width:920px; margin:1.6rem auto 0; padding:0 1.5rem; }
+    .weather-inner {
+      display:flex; align-items:center; gap:1.4rem; flex-wrap:wrap;
+      background:var(--glass); backdrop-filter:blur(14px); border:1px solid var(--border-warm);
+      border-radius:40px; padding:.65rem 1.5rem;
+    }
+    .w-temp { font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:500; color:var(--text-bright); white-space:nowrap; }
+    .w-details { display:flex; gap:1.3rem; flex-wrap:wrap; }
+    .w-chip { font-size:.72rem; color:var(--text-mid); display:flex; flex-direction:column; gap:1px; }
+    .w-chip span { font-size:.59rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:.08em; }
+    .w-link {
+      margin-left:auto; font-family:'Raleway',sans-serif; font-size:.63rem; font-weight:600;
+      letter-spacing:.12em; text-transform:uppercase; color:var(--gold); text-decoration:none;
+      display:flex; align-items:center; gap:.3rem; white-space:nowrap; transition:opacity .2s;
+    }
+    .w-link:hover { opacity:.7; }
+    .w-link svg { width:11px; height:11px; stroke:currentColor; fill:none; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; }
+
+    /* ── MAIN ── */
+    main { position:relative; z-index:10; max-width:1080px; margin:0 auto; padding:2.5rem 1.5rem; }
+    .sec-label {
+      font-size:.63rem; font-weight:600; letter-spacing:.24em; text-transform:uppercase;
+      color:var(--text-dim); margin-bottom:1.1rem; display:flex; align-items:center; gap:.75rem;
+    }
+    .sec-label::after { content:''; flex:1; height:1px; background:var(--border); }
+    .card-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(285px,1fr)); gap:1rem; }
+
+    /* ── CARDS ── */
+    .card {
+      background:var(--glass); backdrop-filter:blur(14px); border:1px solid var(--border);
+      border-radius:14px; overflow:hidden;
+      transition:border-color .25s, box-shadow .25s, transform .2s;
+      animation:fadeUp .45s ease both;
+    }
+    .card:hover { border-color:var(--border-warm); box-shadow:0 8px 28px rgba(0,0,0,.28), 0 0 0 1px rgba(212,168,67,.10); transform:translateY(-2px); }
+    .card:nth-child(1){animation-delay:.04s} .card:nth-child(2){animation-delay:.09s}
+    .card:nth-child(3){animation-delay:.14s} .card:nth-child(4){animation-delay:.19s}
+    .card:nth-child(5){animation-delay:.24s} .card:nth-child(6){animation-delay:.29s}
+    @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+
+    .card-hdr { display:flex; align-items:center; justify-content:space-between; padding:.95rem 1.1rem; cursor:pointer; user-select:none; transition:background .2s; }
+    .card-hdr:hover { background:var(--glass-hover); }
+    .card.open .card-hdr { border-bottom:1px solid var(--border); }
+    .card-hdr-left { display:flex; align-items:center; gap:.65rem; }
+    .card-ico {
+      width:30px; height:30px; background:var(--gold-glow); border:1px solid rgba(212,168,67,.22);
+      border-radius:7px; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    }
+    .card-ico svg { width:14px; height:14px; stroke:var(--gold); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .card-title { font-family:'Raleway',sans-serif; font-size:.88rem; font-weight:600; color:var(--text-bright); letter-spacing:.04em; }
+    .card-count { font-size:.6rem; color:var(--text-dim); margin-top:1px; }
+    .chevron { width:14px; height:14px; stroke:var(--text-dim); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0; transition:transform .3s; }
+    .card.open .chevron { transform:rotate(180deg); }
+
+    .card-links { max-height:0; overflow:hidden; transition:max-height .35s ease; }
+    .card.open .card-links { max-height:560px; }
+    .card-links-inner { padding:.45rem; display:flex; flex-direction:column; gap:2px; max-height:310px; overflow-y:auto; }
+    .card-links-inner::-webkit-scrollbar { width:3px; }
+    .card-links-inner::-webkit-scrollbar-thumb { background:var(--border-warm); border-radius:4px; }
+
+    .link-item { display:flex; align-items:center; justify-content:space-between; padding:.52rem .72rem; border-radius:7px; text-decoration:none; color:var(--text-mid); font-size:.81rem; gap:.5rem; transition:background .15s,color .15s; }
+    .link-item:hover { background:var(--glass-hover); color:var(--text-bright); }
+    .link-item:hover .link-arr { opacity:1; stroke:var(--gold); }
+    .link-arr { width:11px; height:11px; stroke:var(--text-dim); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; opacity:0; flex-shrink:0; transition:opacity .15s,stroke .15s; }
+
+    /* ── TIMER ── */
+    footer { position:relative; z-index:10; padding:2.5rem 1.5rem 2.5rem; border-top:1px solid var(--border); background:rgba(12,6,1,.42); backdrop-filter:blur(10px); }
+    .timer-box { max-width:580px; margin:0 auto; background:var(--glass); backdrop-filter:blur(16px); border:1px solid var(--border-warm); border-radius:22px; padding:2.2rem 2rem; }
+    .timer-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.75rem; }
+    .timer-label { display:flex; align-items:center; gap:.55rem; font-size:.82rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--text-mid); }
+    .timer-label svg { width:15px; height:15px; stroke:var(--gold); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .step-bars { display:flex; gap:5px; }
+    .sbar { height:4px; width:36px; border-radius:4px; background:rgba(255,255,255,.07); transition:all .5s; }
+    .sbar.active { background:var(--gold); width:52px; }
+    .sbar.done { background:rgba(212,168,67,.32); }
+    .timer-step-lbl { text-align:center; font-size:.62rem; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:var(--text-dim); margin-bottom:.4rem; min-height:1rem; }
+    .timer-num { font-family:'Cormorant Garamond',serif; font-size:5.5rem; font-weight:300; text-align:center; color:var(--text-bright); letter-spacing:-.02em; line-height:1; margin-bottom:1.8rem; text-shadow:0 2px 18px rgba(0,0,0,.4); }
+    .timer-btns { display:flex; align-items:center; justify-content:center; gap:1.4rem; }
+    .t-sec { width:46px; height:46px; border-radius:50%; background:transparent; border:1px solid var(--border-warm); color:var(--text-dim); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+    .t-sec:hover { background:var(--glass-hover); color:var(--text-bright); border-color:var(--text-mid); }
+    .t-sec svg { width:17px; height:17px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .t-main { width:70px; height:70px; border-radius:50%; background:var(--gold); border:none; color:var(--deep); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .2s; box-shadow:0 4px 18px var(--gold-glow); }
+    .t-main:hover { opacity:.88; transform:scale(1.04); }
+    .t-main.paused { background:rgba(253,246,232,.88); }
+    .t-main svg { width:25px; height:25px; stroke:currentColor; fill:currentColor; stroke-width:1.5; }
+    .tone-ind { width:46px; height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--text-dim); transition:color .3s; }
+    .tone-ind.on { color:var(--gold); animation:pulse-t .8s ease-in-out infinite alternate; }
+    @keyframes pulse-t { from{opacity:.55} to{opacity:1} }
+    .tone-ind svg { width:19px; height:19px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .footer-txt { text-align:center; margin-top:1.8rem; font-size:.63rem; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:var(--text-dim); }
+    .footer-txt span { color:var(--gold); }
+
+    @media(max-width:640px){
+      .clock-time{font-size:3.6rem} .verse-text{font-size:1.5rem}
+      .cross-svg{width:300px;height:300px} main{padding:1.5rem 1rem} .timer-num{font-size:4rem}
+    }
+  </style>
+</head>
+<body>
+
+<!-- BACKGROUND -->
+<div class="bg">
+  <div class="bg-grad"></div>
+  <div class="bg-texture"></div>
+  <div class="bg-vignette"></div>
+  <div class="bg-band"></div>
+  <div class="bg-cross">
+    <div class="cross-wrap">
+      <div class="cross-glow"></div>
+      <svg class="cross-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="cg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"   stop-color="#f5efe6" stop-opacity=".88"/>
+            <stop offset="50%"  stop-color="#d4a843" stop-opacity=".65"/>
+            <stop offset="100%" stop-color="#8b6f47" stop-opacity=".45"/>
+          </linearGradient>
+          <filter id="gf"><feGaussianBlur stdDeviation=".25" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <circle cx="12" cy="12" r="10" stroke="#d4a843" stroke-width=".055" opacity=".22"/>
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="#d4a843" stroke-width=".048" opacity=".16"/>
+        <path d="M2 12h20" stroke="#d4a843" stroke-width=".048" opacity=".16"/>
+        <path d="M11.1 3h1.8v18h-1.8z" fill="url(#cg)" filter="url(#gf)"/>
+        <path d="M6 8h12v1.8H6z"       fill="url(#cg)" filter="url(#gf)"/>
+        <path d="M11.1 3h.45v18h-.45z" fill="white" opacity=".32"/>
+        <path d="M6 8h12v.38H6z"       fill="white" opacity=".32"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- CLOCK -->
+<header>
+  <div class="clock-time">
+    <span id="ch">--</span>:<span id="cm">--</span><span class="clock-sec"><span id="cs">--</span></span><span class="clock-ampm" id="ca">--</span>
+  </div>
+  <div class="clock-date" id="cd">Loading…</div>
+</header>
+
+<!-- VERSE -->
+<section class="verse-wrap">
+  <div class="verse-icon">
+    <svg viewBox="0 0 24 24"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+  </div>
+  <p class="verse-text" id="vt">"I can do all things through him who strengthens me."</p>
+  <div class="verse-ref" id="vr">— Philippians 4:13 (ESV)</div>
+  <button class="verse-btn" id="vbtn">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+    New Verse
+  </button>
+</section>
+
+<!-- WEATHER -->
+<div class="weather-row">
+  <div class="weather-inner">
+    <div class="w-temp" id="wt">--°</div>
+    <div class="w-details">
+      <div class="w-chip"><span>Condition</span><span id="wc">--</span></div>
+      <div class="w-chip"><span>Humidity</span><span id="wh">--%</span></div>
+      <div class="w-chip"><span>Wind</span><span id="ww">-- mph</span></div>
+      <div class="w-chip"><span>Feels Like</span><span id="wf">--°</span></div>
+    </div>
+    <a class="w-link" href="https://www.msn.com/en-us/weather/forecast/in-Opelika,Alabama" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      Full Forecast
+    </a>
+  </div>
+</div>
+
+<!-- LINK GRID -->
+<main>
+  <div class="sec-label">Quick Access</div>
+  <div class="card-grid" id="grid"></div>
+</main>
+
+<!-- FOCUS TIMER -->
+<footer>
+  <div class="timer-box">
+    <div class="timer-top">
+      <div class="timer-label">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Focus Session
+      </div>
+      <div class="step-bars" id="sbars"></div>
+    </div>
+    <div class="timer-step-lbl" id="tslbl">Preparation</div>
+    <div class="timer-num" id="tnum">5:00</div>
+    <div class="timer-btns">
+      <button class="t-sec" id="treset" title="Reset">
+        <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.54"/></svg>
+      </button>
+      <button class="t-main" id="tplay">
+        <svg id="ticon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </button>
+      <div class="tone-ind" id="tone">
+        <svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+      </div>
+    </div>
+  </div>
+  <div class="footer-txt">Tim's Personal Space · <span id="fy"></span></div>
+</footer>
+
+<script>
+// ── CLOCK ────────────────────────────────────────────────
+const pad = n => String(n).padStart(2,'0');
+function tick() {
+  const now = new Date();
+  let h = now.getHours(), ap = 'AM';
+  if (h >= 12) { ap = 'PM'; if (h > 12) h -= 12; } if (h===0) h=12;
+  document.getElementById('ch').textContent = h;
+  document.getElementById('cm').textContent = pad(now.getMinutes());
+  document.getElementById('cs').textContent = pad(now.getSeconds());
+  document.getElementById('ca').textContent = ap;
+  document.getElementById('cd').textContent = now.toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'}).toUpperCase();
+}
+tick(); setInterval(tick, 1000);
+document.getElementById('fy').textContent = new Date().getFullYear();
+
+// ── WEATHER ──────────────────────────────────────────────
+async function fetchWeather() {
+  try {
+    const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=32.6454&longitude=-85.3783&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=America%2FChicago');
+    const d = (await r.json()).current;
+    const desc = {0:'Clear',1:'Clear',2:'Partly Cloudy',3:'Overcast',45:'Fog',48:'Icy Fog',51:'Drizzle',53:'Drizzle',55:'Heavy Drizzle',61:'Light Rain',63:'Rain',65:'Heavy Rain',71:'Light Snow',73:'Snow',75:'Heavy Snow',80:'Showers',81:'Heavy Showers',95:'Thunderstorm',99:'Severe Storm'};
+    document.getElementById('wt').textContent = Math.round(d.temperature_2m)+'°F';
+    document.getElementById('wc').textContent = desc[d.weather_code]||'Variable';
+    document.getElementById('wh').textContent = d.relative_humidity_2m+'%';
+    document.getElementById('ww').textContent = Math.round(d.wind_speed_10m)+' mph';
+    document.getElementById('wf').textContent = Math.round(d.apparent_temperature)+'°F';
+  } catch { document.getElementById('wc').textContent = 'Unavailable'; }
+}
+fetchWeather();
+
+// ── VERSE ────────────────────────────────────────────────
+const FALLBACK = [
+  {t:'"For I know the plans I have for you, declares the Lord, plans for welfare and not for evil, to give you a future and a hope."',r:'— Jeremiah 29:11 (ESV)'},
+  {t:'"The Lord is my shepherd; I shall not want."',r:'— Psalm 23:1 (ESV)'},
+  {t:'"Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go."',r:'— Joshua 1:9 (ESV)'},
+  {t:'"Trust in the Lord with all your heart, and do not lean on your own understanding."',r:'— Proverbs 3:5 (ESV)'},
+  {t:'"I can do all things through him who strengthens me."',r:'— Philippians 4:13 (ESV)'},
+];
+async function fetchVerse() {
+  const btn = document.getElementById('vbtn');
+  btn.classList.add('spinning');
+  document.getElementById('vt').style.opacity = '.3';
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:200,messages:[{role:'user',content:'Give me one short uplifting Bible verse from the ESV translation. Format exactly: "[verse text]" — [Reference] (ESV). Only output the verse, nothing else.'}]})});
+    const data = await res.json();
+    const text = data.content?.[0]?.text?.trim();
+    if (text && text.includes(' — ')) {
+      const p = text.split(' — ');
+      document.getElementById('vt').textContent = p[0];
+      document.getElementById('vr').textContent = '— ' + p[1];
+    } else throw new Error();
+  } catch {
+    const v = FALLBACK[Math.floor(Math.random()*FALLBACK.length)];
+    document.getElementById('vt').textContent = v.t;
+    document.getElementById('vr').textContent = v.r;
+  } finally { btn.classList.remove('spinning'); document.getElementById('vt').style.opacity='1'; }
+}
+document.getElementById('vbtn').addEventListener('click', fetchVerse);
+
+// ── CARDS ────────────────────────────────────────────────
+const CARDS = [
+  { title:'Bible Study', icon:`<svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
+    links:[
+      {n:'BibleGateway',                    u:'https://www.biblegateway.com/'},
+      {n:'Bible Hub',                        u:'https://biblehub.com'},
+      {n:'Scripture Learning Games — ESV',   u:'https://tcooper0528.github.io/Lifelight/'},
+      {n:'More the Man Newsletter',          u:'https://newsletter.moretheman.com/'},
+      {n:'✝️ Know Your Enemy',               u:'https://newsletter.moretheman.com/p/know-your-enemy'},
+      {n:'Unseen Battle — BibleGateway',     u:'https://www.biblegateway.com/learn/biblical-living/spiritual-warfare/unseen-battle-geopolitical-warfare/'},
+      {n:'Don\'t Give Up (PDF · Drive)',     u:'https://drive.google.com/file/d/1W0fgVXflxpr00NT_ajf2O61lgrtA0m19/view'},
+      {n:'Tertullian',                       u:'https://www.tertullian.org'},
+      {n:'Christianity.com',                 u:'https://www.christianity.com/'},
+      {n:'Early Church History Timeline',    u:'https://www.christianity.com/wiki/church-history/early-church-history-timeline.html'},
+    ]},
+  { title:'Financial', icon:`<svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
+    links:[
+      {n:'PNC Banking',        u:'https://www.pnc.com'},
+      {n:'Cash App',           u:'https://cash.app'},
+      {n:'State Farm',         u:'https://www.statefarm.com'},
+      {n:'Lee County Renewal', u:'https://www.leecounty.al.gov'},
+      {n:'AT&T',               u:'https://www.att.com'},
+      {n:'SpringGreen',        u:'https://myspringgreen.com'},
+    ]},
+  { title:'Social', icon:`<svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>`,
+    links:[
+      {n:'YouTube',     u:'https://youtube.com'},
+      {n:'Facebook',    u:'https://facebook.com'},
+      {n:'Google Docs', u:'https://docs.google.com/document/u/0/'},
+      {n:'Google',   u:'https://google.com'},
+    ]},
+  { title:'AI Tools', icon:`<svg viewBox="0 0 24 24"><rect x="2" y="2" width="8" height="8" rx="1"/><rect x="14" y="2" width="8" height="8" rx="1"/><rect x="2" y="14" width="8" height="8" rx="1"/><path d="M14 17h2a2 2 0 0 1 2 2v2"/><path d="M22 14h-2a2 2 0 0 0-2 2v2"/></svg>`,
+    links:[
+      {n:'Claude (Anthropic)', u:'https://claude.ai/'},
+      {n:'ChatGPT',            u:'https://chat.openai.com'},
+      {n:'Google Gemini',      u:'https://gemini.google.com/app'},
+      {n:'AI Studio',          u:'https://aistudio.google.com'},
+      {n:'NotebookLM',         u:'https://notebooklm.google'},
+      {n:'Opal',               u:'https://opal.com'},
+      {n:'GitHub',             u:'https://github.com/login'},
+    ]},
+  { title:'Workouts', icon:`<svg viewBox="0 0 24 24"><path d="M6.5 6.5h11v11h-11z" stroke-width="1.5"/><path d="M2 9h4M18 9h4M2 15h4M18 15h4M9 2v4M15 2v4M9 18v4M15 18v4"/></svg>`,
+    links:[
+      {n:'Holden QiGong',              u:'https://www.holdenqigong.com'},
+      {n:'YouTube — Morning Workout',  u:'https://youtu.be/1hCV8mDX_8E?si=4dh-SMo2ZqJC1ajn'},
+      {n:'YouTube — Strength',         u:'https://youtu.be/OX-quG89UYI?si=l_fI3vm6aH7IYqCt'},
+      {n:'YouTube — Mobility',         u:'https://youtu.be/lIjj-D_lEhg?si=7FaFMDZxrRmHtY1m'},
+      {n:'Google Drive (Fitness)',      u:'https://drive.google.com'},
+    ]},
+  { title:'Projects', icon:`<svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
+    links:[
+      {n:'Home Depot', u:'https://www.homedepot.com'},
+    ]},
+];
+
+const grid = document.getElementById('grid');
+CARDS.forEach(card => {
+  const el = document.createElement('div');
+  el.className = 'card';
+  el.innerHTML = `
+    <div class="card-hdr" tabindex="0" role="button" aria-expanded="false">
+      <div class="card-hdr-left">
+        <div class="card-ico">${card.icon}</div>
+        <div><div class="card-title">${card.title}</div><div class="card-count">${card.links.length} links</div></div>
+      </div>
+      <svg class="chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="card-links">
+      <div class="card-links-inner">
+        ${card.links.map(l=>`<a class="link-item" href="${l.u}" target="_blank" rel="noopener noreferrer"><span>${l.n}</span><svg class="link-arr" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>`).join('')}
+      </div>
+    </div>`;
+  const hdr = el.querySelector('.card-hdr');
+  const toggle = () => { const o = el.classList.toggle('open'); hdr.setAttribute('aria-expanded', o); };
+  hdr.addEventListener('click', toggle);
+  hdr.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();} });
+  grid.appendChild(el);
+});
+
+// ── FOCUS TIMER ──────────────────────────────────────────
+const STEPS = [{label:'Preparation',dur:300},{label:'Main Session',dur:900},{label:'Reflection',dur:300}];
+let si=0, tl=300, running=false, iv=null, tonePlaying=false;
+
+const sbars = document.getElementById('sbars');
+STEPS.forEach((_,i)=>{ const b=document.createElement('div'); b.className='sbar'+(i===0?' active':''); b.id='sb'+i; sbars.appendChild(b); });
+
+const fmtT = s => `${Math.floor(s/60)}:${pad(s%60)}`;
+function updateTimer() {
+  document.getElementById('tnum').textContent = fmtT(tl);
+  document.getElementById('tslbl').textContent = STEPS[si].label;
+  STEPS.forEach((_,i) => { document.getElementById('sb'+i).className='sbar'+(i===si?' active':i<si?' done':''); });
+  const icon=document.getElementById('ticon'), btn=document.getElementById('tplay');
+  if(running){ icon.innerHTML='<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>'; btn.classList.add('paused'); }
+  else { icon.innerHTML='<polygon points="5 3 19 12 5 21 5 3"/>'; btn.classList.remove('paused'); }
+}
+function playTone() {
+  document.getElementById('tone').classList.add('on');
+  const ctx=new(window.AudioContext||window.webkitAudioContext)(), osc=ctx.createOscillator(), gain=ctx.createGain();
+  osc.connect(gain); gain.connect(ctx.destination); osc.type='sine'; osc.frequency.setValueAtTime(440,ctx.currentTime);
+  gain.gain.setValueAtTime(0,ctx.currentTime); gain.gain.linearRampToValueAtTime(.1,ctx.currentTime+.1); gain.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+3);
+  osc.start(); osc.stop(ctx.currentTime+3);
+  setTimeout(()=>document.getElementById('tone').classList.remove('on'),3000);
+}
+function timerTick() {
+  if(tl>0){tl--;updateTimer();return;}
+  playTone();
+  if(si<STEPS.length-1){si++;tl=STEPS[si].dur;updateTimer();}
+  else{running=false;clearInterval(iv);iv=null;updateTimer();}
+}
+document.getElementById('tplay').addEventListener('click',()=>{
+  running=!running;
+  if(running){iv=setInterval(timerTick,1000);}else{clearInterval(iv);iv=null;}
+  updateTimer();
+});
+document.getElementById('treset').addEventListener('click',()=>{
+  running=false;clearInterval(iv);iv=null;si=0;tl=STEPS[0].dur;updateTimer();
+});
+updateTimer();
+</script>
+</body>
+</html>
