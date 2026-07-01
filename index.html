@@ -10,10 +10,6 @@
     :root {
       --gold:        #d4a843;
       --gold-glow:   rgba(212,168,67,0.18);
-      --clay:        #c4a882;
-      --earth:       #8b6f47;
-      --bark:        #5c4430;
-      --deep:        #2e1f0f;
       --glass:       rgba(255,245,220,0.08);
       --glass-hover: rgba(255,245,220,0.15);
       --border:      rgba(196,168,130,0.18);
@@ -21,6 +17,7 @@
       --text-bright: #fdf6e8;
       --text-mid:    rgba(253,246,232,0.68);
       --text-dim:    rgba(253,246,232,0.38);
+      --deep:        #2e1f0f;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Raleway', sans-serif; min-height: 100vh; overflow-x: hidden; color: var(--text-bright); }
@@ -116,7 +113,7 @@
     .w-link svg { width:11px; height:11px; stroke:currentColor; fill:none; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; }
 
     /* ── MAIN ── */
-    main { position:relative; z-index:10; max-width:1080px; margin:0 auto; padding:2.5rem 1.5rem; }
+    main { position:relative; z-index:10; max-width:1080px; margin:0 auto; padding:2.5rem 1.5rem 4rem; }
     .sec-label {
       font-size:.63rem; font-weight:600; letter-spacing:.24em; text-transform:uppercase;
       color:var(--text-dim); margin-bottom:1.1rem; display:flex; align-items:center; gap:.75rem;
@@ -162,36 +159,18 @@
     .link-item:hover .link-arr { opacity:1; stroke:var(--gold); }
     .link-arr { width:11px; height:11px; stroke:var(--text-dim); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; opacity:0; flex-shrink:0; transition:opacity .15s,stroke .15s; }
 
-    /* ── TIMER ── */
-    footer { position:relative; z-index:10; padding:2.5rem 1.5rem 2.5rem; border-top:1px solid var(--border); background:rgba(12,6,1,.42); backdrop-filter:blur(10px); }
-    .timer-box { max-width:580px; margin:0 auto; background:var(--glass); backdrop-filter:blur(16px); border:1px solid var(--border-warm); border-radius:22px; padding:2.2rem 2rem; }
-    .timer-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.75rem; }
-    .timer-label { display:flex; align-items:center; gap:.55rem; font-size:.82rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--text-mid); }
-    .timer-label svg { width:15px; height:15px; stroke:var(--gold); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
-    .step-bars { display:flex; gap:5px; }
-    .sbar { height:4px; width:36px; border-radius:4px; background:rgba(255,255,255,.07); transition:all .5s; }
-    .sbar.active { background:var(--gold); width:52px; }
-    .sbar.done { background:rgba(212,168,67,.32); }
-    .timer-step-lbl { text-align:center; font-size:.62rem; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:var(--text-dim); margin-bottom:.4rem; min-height:1rem; }
-    .timer-num { font-family:'Cormorant Garamond',serif; font-size:5.5rem; font-weight:300; text-align:center; color:var(--text-bright); letter-spacing:-.02em; line-height:1; margin-bottom:1.8rem; text-shadow:0 2px 18px rgba(0,0,0,.4); }
-    .timer-btns { display:flex; align-items:center; justify-content:center; gap:1.4rem; }
-    .t-sec { width:46px; height:46px; border-radius:50%; background:transparent; border:1px solid var(--border-warm); color:var(--text-dim); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .2s; }
-    .t-sec:hover { background:var(--glass-hover); color:var(--text-bright); border-color:var(--text-mid); }
-    .t-sec svg { width:17px; height:17px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
-    .t-main { width:70px; height:70px; border-radius:50%; background:var(--gold); border:none; color:var(--deep); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .2s; box-shadow:0 4px 18px var(--gold-glow); }
-    .t-main:hover { opacity:.88; transform:scale(1.04); }
-    .t-main.paused { background:rgba(253,246,232,.88); }
-    .t-main svg { width:25px; height:25px; stroke:currentColor; fill:currentColor; stroke-width:1.5; }
-    .tone-ind { width:46px; height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--text-dim); transition:color .3s; }
-    .tone-ind.on { color:var(--gold); animation:pulse-t .8s ease-in-out infinite alternate; }
-    @keyframes pulse-t { from{opacity:.55} to{opacity:1} }
-    .tone-ind svg { width:19px; height:19px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
-    .footer-txt { text-align:center; margin-top:1.8rem; font-size:.63rem; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:var(--text-dim); }
-    .footer-txt span { color:var(--gold); }
+    /* ── FOOTER ── */
+    footer {
+      position:relative; z-index:10; text-align:center;
+      padding:1.5rem 2rem; border-top:1px solid var(--border);
+      font-size:.63rem; font-weight:500; letter-spacing:.2em;
+      text-transform:uppercase; color:var(--text-dim);
+    }
+    footer span { color:var(--gold); }
 
     @media(max-width:640px){
       .clock-time{font-size:3.6rem} .verse-text{font-size:1.5rem}
-      .cross-svg{width:300px;height:300px} main{padding:1.5rem 1rem} .timer-num{font-size:4rem}
+      .cross-svg{width:300px;height:300px} main{padding:1.5rem 1rem 3rem}
     }
   </style>
 </head>
@@ -271,32 +250,7 @@
   <div class="card-grid" id="grid"></div>
 </main>
 
-<!-- FOCUS TIMER -->
-<footer>
-  <div class="timer-box">
-    <div class="timer-top">
-      <div class="timer-label">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        Focus Session
-      </div>
-      <div class="step-bars" id="sbars"></div>
-    </div>
-    <div class="timer-step-lbl" id="tslbl">Preparation</div>
-    <div class="timer-num" id="tnum">5:00</div>
-    <div class="timer-btns">
-      <button class="t-sec" id="treset" title="Reset">
-        <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.54"/></svg>
-      </button>
-      <button class="t-main" id="tplay">
-        <svg id="ticon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-      </button>
-      <div class="tone-ind" id="tone">
-        <svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
-      </div>
-    </div>
-  </div>
-  <div class="footer-txt">Tim's Personal Space · <span id="fy"></span></div>
-</footer>
+<footer>Tim's Personal Space · <span id="fy"></span></footer>
 
 <script>
 // ── CLOCK ────────────────────────────────────────────────
@@ -381,13 +335,17 @@ const CARDS = [
       {n:'Lee County Renewal', u:'https://www.leecounty.al.gov'},
       {n:'AT&T',               u:'https://www.att.com'},
       {n:'SpringGreen',        u:'https://myspringgreen.com'},
+      {n:'Amazon',             u:'https://www.amazon.com/'},
     ]},
   { title:'Social', icon:`<svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>`,
     links:[
-      {n:'YouTube',     u:'https://youtube.com'},
-      {n:'Facebook',    u:'https://facebook.com'},
-      {n:'Google',      u:'https://google.com'},
-      {n:'Google Docs', u:'https://docs.google.com/document/u/0/'},
+      {n:'YouTube',      u:'https://youtube.com'},
+      {n:'Facebook',     u:'https://facebook.com'},
+      {n:'Google',       u:'https://google.com'},
+      {n:'Google Docs',  u:'https://docs.google.com/document/u/0/'},
+      {n:'Outlook Mail', u:'https://outlook.live.com/mail/?utm_source=copilot.com'},
+      {n:'Yahoo Mail',   u:'https://mail.yahoo.com/n/inbox/priority?.src=ym&reason=myc'},
+      {n:'Gmail',        u:'https://mail.google.com/mail/u/0/?ogbl#inbox'},
     ]},
   { title:'AI Tools', icon:`<svg viewBox="0 0 24 24"><rect x="2" y="2" width="8" height="8" rx="1"/><rect x="14" y="2" width="8" height="8" rx="1"/><rect x="2" y="14" width="8" height="8" rx="1"/><path d="M14 17h2a2 2 0 0 1 2 2v2"/><path d="M22 14h-2a2 2 0 0 0-2 2v2"/></svg>`,
     links:[
@@ -404,6 +362,7 @@ const CARDS = [
     ]},
   { title:'Workouts', icon:`<svg viewBox="0 0 24 24"><path d="M6.5 6.5h11v11h-11z" stroke-width="1.5"/><path d="M2 9h4M18 9h4M2 15h4M18 15h4M9 2v4M15 2v4M9 18v4M15 18v4"/></svg>`,
     links:[
+      {n:'Exercise Timer App',         u:'https://tcooper0528.github.io/exercise-timer/'},
       {n:'Holden QiGong',              u:'https://www.holdenqigong.com'},
       {n:'YouTube — Morning Workout',  u:'https://youtu.be/1hCV8mDX_8E?si=4dh-SMo2ZqJC1ajn'},
       {n:'YouTube — Strength',         u:'https://youtu.be/OX-quG89UYI?si=l_fI3vm6aH7IYqCt'},
@@ -412,8 +371,9 @@ const CARDS = [
     ]},
   { title:'Projects', icon:`<svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
     links:[
-      {n:'Home Depot',   u:'https://www.homedepot.com'},
-      {n:'VS Code',      u:'https://code.visualstudio.com/'},
+      {n:'Home Depot', u:'https://www.homedepot.com'},
+      {n:'PetSmart',   u:'https://www.petsmart.com/'},
+      {n:'VS Code',    u:'https://code.visualstudio.com/'},
     ]},
 ];
 
@@ -440,46 +400,6 @@ CARDS.forEach(card => {
   hdr.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();} });
   grid.appendChild(el);
 });
-
-// ── FOCUS TIMER ──────────────────────────────────────────
-const STEPS = [{label:'Preparation',dur:300},{label:'Main Session',dur:900},{label:'Reflection',dur:300}];
-let si=0, tl=300, running=false, iv=null;
-
-const sbars = document.getElementById('sbars');
-STEPS.forEach((_,i)=>{ const b=document.createElement('div'); b.className='sbar'+(i===0?' active':''); b.id='sb'+i; sbars.appendChild(b); });
-
-const fmtT = s => `${Math.floor(s/60)}:${pad(s%60)}`;
-function updateTimer() {
-  document.getElementById('tnum').textContent = fmtT(tl);
-  document.getElementById('tslbl').textContent = STEPS[si].label;
-  STEPS.forEach((_,i) => { document.getElementById('sb'+i).className='sbar'+(i===si?' active':i<si?' done':''); });
-  const icon=document.getElementById('ticon'), btn=document.getElementById('tplay');
-  if(running){ icon.innerHTML='<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>'; btn.classList.add('paused'); }
-  else { icon.innerHTML='<polygon points="5 3 19 12 5 21 5 3"/>'; btn.classList.remove('paused'); }
-}
-function playTone() {
-  document.getElementById('tone').classList.add('on');
-  const ctx=new(window.AudioContext||window.webkitAudioContext)(), osc=ctx.createOscillator(), gain=ctx.createGain();
-  osc.connect(gain); gain.connect(ctx.destination); osc.type='sine'; osc.frequency.setValueAtTime(440,ctx.currentTime);
-  gain.gain.setValueAtTime(0,ctx.currentTime); gain.gain.linearRampToValueAtTime(.1,ctx.currentTime+.1); gain.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+3);
-  osc.start(); osc.stop(ctx.currentTime+3);
-  setTimeout(()=>document.getElementById('tone').classList.remove('on'),3000);
-}
-function timerTick() {
-  if(tl>0){tl--;updateTimer();return;}
-  playTone();
-  if(si<STEPS.length-1){si++;tl=STEPS[si].dur;updateTimer();}
-  else{running=false;clearInterval(iv);iv=null;updateTimer();}
-}
-document.getElementById('tplay').addEventListener('click',()=>{
-  running=!running;
-  if(running){iv=setInterval(timerTick,1000);}else{clearInterval(iv);iv=null;}
-  updateTimer();
-});
-document.getElementById('treset').addEventListener('click',()=>{
-  running=false;clearInterval(iv);iv=null;si=0;tl=STEPS[0].dur;updateTimer();
-});
-updateTimer();
 </script>
 </body>
 </html>
