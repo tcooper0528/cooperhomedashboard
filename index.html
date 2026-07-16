@@ -8,37 +8,42 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --gold:        #d4a843;
-      --gold-glow:   rgba(212,168,67,0.18);
-      --glass:       rgba(255,245,220,0.08);
-      --glass-hover: rgba(255,245,220,0.15);
-      --border:      rgba(196,168,130,0.18);
-      --border-warm: rgba(196,168,130,0.38);
-      --text-bright: #fdf6e8;
-      --text-mid:    rgba(253,246,232,0.68);
-      --text-dim:    rgba(253,246,232,0.38);
-      --deep:        #2e1f0f;
+      --gold:        #7fb9e8;
+      --gold-glow:   rgba(127,185,232,0.18);
+      --glass:       rgba(220,238,255,0.07);
+      --glass-hover: rgba(220,238,255,0.14);
+      --border:      rgba(150,190,225,0.18);
+      --border-warm: rgba(150,190,225,0.40);
+      --text-bright: #eef6fd;
+      --text-mid:    rgba(238,246,253,0.68);
+      --text-dim:    rgba(238,246,253,0.40);
+      --deep:        #0a1626;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Raleway', sans-serif; min-height: 100vh; overflow-x: hidden; color: var(--text-bright); }
 
     /* ── BACKGROUND ── */
-    .bg { position: fixed; inset: 0; z-index: 0; }
+    .bg { position: fixed; inset: 0; z-index: 0; background:#060e1c; }
+    .bg-image {
+      position: absolute; inset: 0;
+      background: url('worldbackground.jpg') center / cover no-repeat;
+      filter: blur(10px) brightness(.52) saturate(1.15);
+      transform: scale(1.10);
+    }
     .bg-grad {
       position: absolute; inset: 0;
       background:
-        radial-gradient(ellipse 110% 70% at 50% -5%, #3d2510 0%, transparent 55%),
-        radial-gradient(ellipse 70% 55% at 0% 100%, #1a0d05 0%, transparent 50%),
-        radial-gradient(ellipse 55% 45% at 100% 80%, #2a1508 0%, transparent 50%),
-        linear-gradient(155deg, #1c0e05 0%, #2e1a08 35%, #1a0c04 65%, #0f0804 100%);
+        radial-gradient(ellipse 110% 70% at 50% -5%, rgba(30,70,120,0.38) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 50% at 100% 85%, rgba(120,30,45,0.22) 0%, transparent 55%),
+        linear-gradient(155deg, rgba(6,14,28,0.78) 0%, rgba(10,22,44,0.62) 40%, rgba(5,10,22,0.80) 100%);
     }
     .bg-texture {
       position: absolute; inset: 0; opacity: 0.05;
-      background-image: repeating-linear-gradient(45deg, rgba(196,168,130,0.4) 0px, rgba(196,168,130,0.4) 1px, transparent 1px, transparent 14px);
+      background-image: repeating-linear-gradient(45deg, rgba(150,190,225,0.4) 0px, rgba(150,190,225,0.4) 1px, transparent 1px, transparent 14px);
     }
     .bg-vignette {
       position: absolute; inset: 0;
-      background: radial-gradient(ellipse 85% 75% at 50% 42%, transparent 25%, rgba(8,4,1,0.60) 100%);
+      background: radial-gradient(ellipse 85% 75% at 50% 42%, transparent 25%, rgba(2,6,14,0.65) 100%);
     }
     .bg-cross {
       position: absolute; inset: 0;
@@ -48,13 +53,13 @@
     @keyframes breathe { 0%,100% { opacity:.25; transform:scale(1); } 50% { opacity:.40; transform:scale(1.05); } }
     .cross-glow {
       position: absolute; inset: -80px;
-      background: radial-gradient(ellipse at center, rgba(212,168,67,0.16) 0%, transparent 65%);
+      background: radial-gradient(ellipse at center, rgba(140,200,255,0.18) 0%, transparent 65%);
       border-radius: 50%;
     }
-    .cross-svg { width: 500px; height: 500px; filter: drop-shadow(0 0 36px rgba(212,168,67,0.22)); }
+    .cross-svg { width: 500px; height: 500px; filter: drop-shadow(0 0 36px rgba(140,200,255,0.25)); }
     .bg-band {
       position: absolute; left: 0; right: 0; top: 36%; height: 280px;
-      background: linear-gradient(180deg, transparent, rgba(212,168,67,0.035) 40%, transparent);
+      background: linear-gradient(180deg, transparent, rgba(140,200,255,0.04) 40%, transparent);
       pointer-events: none;
     }
 
@@ -128,10 +133,11 @@
       transition:border-color .25s, box-shadow .25s, transform .2s;
       animation:fadeUp .45s ease both;
     }
-    .card:hover { border-color:var(--border-warm); box-shadow:0 8px 28px rgba(0,0,0,.28), 0 0 0 1px rgba(212,168,67,.10); transform:translateY(-2px); }
+    .card:hover { border-color:var(--border-warm); box-shadow:0 8px 28px rgba(0,0,0,.32), 0 0 0 1px rgba(127,185,232,.10); transform:translateY(-2px); }
     .card:nth-child(1){animation-delay:.04s} .card:nth-child(2){animation-delay:.09s}
     .card:nth-child(3){animation-delay:.14s} .card:nth-child(4){animation-delay:.19s}
     .card:nth-child(5){animation-delay:.24s} .card:nth-child(6){animation-delay:.29s}
+    .card:nth-child(7){animation-delay:.34s} .card:nth-child(8){animation-delay:.39s}
     @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
 
     .card-hdr { display:flex; align-items:center; justify-content:space-between; padding:.95rem 1.1rem; cursor:pointer; user-select:none; transition:background .2s; }
@@ -139,7 +145,7 @@
     .card.open .card-hdr { border-bottom:1px solid var(--border); }
     .card-hdr-left { display:flex; align-items:center; gap:.65rem; }
     .card-ico {
-      width:30px; height:30px; background:var(--gold-glow); border:1px solid rgba(212,168,67,.22);
+      width:30px; height:30px; background:var(--gold-glow); border:1px solid rgba(127,185,232,.25);
       border-radius:7px; display:flex; align-items:center; justify-content:center; flex-shrink:0;
     }
     .card-ico svg { width:14px; height:14px; stroke:var(--gold); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
@@ -178,6 +184,7 @@
 
 <!-- BACKGROUND -->
 <div class="bg">
+  <div class="bg-image"></div>
   <div class="bg-grad"></div>
   <div class="bg-texture"></div>
   <div class="bg-vignette"></div>
@@ -185,22 +192,51 @@
   <div class="bg-cross">
     <div class="cross-wrap">
       <div class="cross-glow"></div>
-      <svg class="cross-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg class="cross-svg" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <linearGradient id="cg" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%"   stop-color="#f5efe6" stop-opacity=".88"/>
-            <stop offset="50%"  stop-color="#d4a843" stop-opacity=".65"/>
-            <stop offset="100%" stop-color="#8b6f47" stop-opacity=".45"/>
+          <linearGradient id="faceGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"   stop-color="#f4fbff" stop-opacity=".95"/>
+            <stop offset="45%"  stop-color="#a8cfec" stop-opacity=".85"/>
+            <stop offset="100%" stop-color="#6f9fc6" stop-opacity=".70"/>
           </linearGradient>
-          <filter id="gf"><feGaussianBlur stdDeviation=".25" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <linearGradient id="sideGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"   stop-color="#4a7398" stop-opacity=".85"/>
+            <stop offset="100%" stop-color="#1e3a56" stop-opacity=".80"/>
+          </linearGradient>
+          <linearGradient id="shineGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%"   stop-color="#ffffff" stop-opacity=".55"/>
+            <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+          </linearGradient>
         </defs>
-        <circle cx="12" cy="12" r="10" stroke="#d4a843" stroke-width=".055" opacity=".22"/>
-        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="#d4a843" stroke-width=".048" opacity=".16"/>
-        <path d="M2 12h20" stroke="#d4a843" stroke-width=".048" opacity=".16"/>
-        <path d="M11.1 3h1.8v18h-1.8z" fill="url(#cg)" filter="url(#gf)"/>
-        <path d="M6 8h12v1.8H6z"       fill="url(#cg)" filter="url(#gf)"/>
-        <path d="M11.1 3h.45v18h-.45z" fill="white" opacity=".32"/>
-        <path d="M6 8h12v.38H6z"       fill="white" opacity=".32"/>
+
+        <!-- globe rings (GIS meridians) -->
+        <circle cx="120" cy="120" r="100" stroke="#7fb9e8" stroke-width=".6" opacity=".22"/>
+        <ellipse cx="120" cy="120" rx="40" ry="100" stroke="#7fb9e8" stroke-width=".5" opacity=".16"/>
+        <line x1="20" y1="120" x2="220" y2="120" stroke="#7fb9e8" stroke-width=".5" opacity=".16"/>
+
+        <!-- 3D extrusion: back cross (depth) -->
+        <path d="M111 37h36v180h-36z" fill="#16283c" opacity=".9"/>
+        <path d="M69 85h120v36H69z"   fill="#16283c" opacity=".9"/>
+
+        <!-- side faces (right + bottom) -->
+        <path d="M138 30 147 37 147 85 138 78z"     fill="url(#sideGrad)"/>
+        <path d="M138 114 147 121 147 217 138 210z" fill="url(#sideGrad)"/>
+        <path d="M180 78 189 85 189 121 180 114z"   fill="url(#sideGrad)"/>
+        <path d="M138 114 180 114 189 121 147 121z" fill="url(#sideGrad)" opacity=".8"/>
+        <path d="M102 210 138 210 147 217 111 217z" fill="url(#sideGrad)" opacity=".8"/>
+
+        <!-- front face -->
+        <path d="M102 30h36v180h-36z" fill="url(#faceGrad)"/>
+        <path d="M60 78h120v36H60z"   fill="url(#faceGrad)"/>
+
+        <!-- bevel highlights (light from upper-left) -->
+        <path d="M102 30h36v3h-36z" fill="#ffffff" opacity=".6"/>
+        <path d="M102 30h2.5v180h-2.5z" fill="#ffffff" opacity=".45"/>
+        <path d="M60 78h120v2.5H60z" fill="#ffffff" opacity=".5"/>
+        <path d="M60 78h2.5v36H60z" fill="#ffffff" opacity=".4"/>
+
+        <!-- glass sheen sweeping down the vertical bar -->
+        <path d="M102 30h36v70h-36z" fill="url(#shineGrad)" opacity=".5"/>
       </svg>
     </div>
   </div>
