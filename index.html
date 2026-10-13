@@ -13,8 +13,8 @@
       --accent-2:    #9db4ff;            /* periwinkle */
       --accent-3:    #b9a6ff;            /* soft lavender */
       --gold-glow:   rgba(111,227,220,0.16);
-      --glass:       rgba(200,240,250,0.06);
-      --glass-hover: rgba(200,240,250,0.13);
+      --glass:       rgba(4,22,34,0.42);
+      --glass-hover: rgba(40,90,110,0.40);
       --border:      rgba(130,210,225,0.18);
       --border-warm: rgba(130,210,225,0.42);
       --text-bright: #ecfbfd;
@@ -29,34 +29,31 @@
     .bg { position: fixed; inset: 0; z-index: 0; background:#03121a; overflow:hidden; }
     .bg-image {
       position: absolute; inset: 0;
-      background: url('worldbackground.jpg') center / cover no-repeat;
-      filter: blur(12px) brightness(.40) saturate(.8) hue-rotate(-15deg);
-      transform: scale(1.10);
+      background: url('lakecross.jpg') center 30% / cover no-repeat;
+      filter: blur(.6px) brightness(.98) saturate(1.08);
+      transform: scale(1.03);
     }
     .bg-grad {
       position: absolute; inset: 0;
       background:
-        radial-gradient(ellipse 110% 70% at 50% -5%, rgba(20,120,140,0.40) 0%, transparent 55%),
-        radial-gradient(ellipse 60% 55% at 100% 90%, rgba(70,60,170,0.30) 0%, transparent 60%),
-        radial-gradient(ellipse 55% 50% at 0% 70%, rgba(20,110,130,0.25) 0%, transparent 60%),
-        linear-gradient(160deg, rgba(3,22,32,0.82) 0%, rgba(6,26,48,0.66) 45%, rgba(8,12,34,0.86) 100%);
+        linear-gradient(180deg, rgba(3,14,24,0.35) 0%, rgba(3,14,24,0.0) 22%, rgba(3,14,24,0.0) 45%, rgba(2,10,18,0.25) 62%, rgba(2,10,18,0.60) 100%);
     }
     /* slow drifting aurora */
     .bg-aurora {
       position:absolute; inset:-20%;
       background:
-        radial-gradient(ellipse 40% 25% at 30% 30%, rgba(111,227,220,0.10), transparent 70%),
-        radial-gradient(ellipse 35% 22% at 70% 60%, rgba(157,180,255,0.10), transparent 70%);
+        radial-gradient(ellipse 40% 25% at 30% 30%, rgba(111,227,220,0.06), transparent 70%),
+        radial-gradient(ellipse 35% 22% at 70% 60%, rgba(157,180,255,0.06), transparent 70%);
       animation: drift 38s ease-in-out infinite alternate;
     }
     @keyframes drift { from { transform: translate(-3%, -2%) rotate(-2deg); } to { transform: translate(3%, 2%) rotate(2deg); } }
     .bg-texture {
-      position: absolute; inset: 0; opacity: 0.04;
+      position: absolute; inset: 0; opacity: 0;
       background-image: repeating-linear-gradient(45deg, rgba(130,210,225,0.4) 0px, rgba(130,210,225,0.4) 1px, transparent 1px, transparent 14px);
     }
     .bg-vignette {
       position: absolute; inset: 0;
-      background: radial-gradient(ellipse 85% 75% at 50% 42%, transparent 25%, rgba(1,6,12,0.70) 100%);
+      background: radial-gradient(ellipse 90% 80% at 50% 38%, transparent 40%, rgba(1,6,12,0.55) 100%);
     }
 
     /* ── INSPIRING WORDS ── */
@@ -71,24 +68,12 @@
     }
     .word small { display:block; font-size:.34em; font-style:normal; font-family:'Raleway',sans-serif; font-weight:500; letter-spacing:.22em; text-transform:uppercase; margin-top:.45em; white-space:normal; }
     @keyframes glowWord { 0%,100% { opacity:.13; } 50% { opacity:.26; } }
-    .w-grace   { left:50%; top:50%; transform:translate(-50%,-50%); font-size:clamp(7rem,22vw,20rem); font-weight:300; letter-spacing:.06em; animation-delay:0s; }
+    .w-grace   { left:50%; top:74%; transform:translate(-50%,-50%); font-size:clamp(7rem,22vw,20rem); font-weight:300; letter-spacing:.06em; animation-delay:0s; }
     .w-still   { left:4%;  top:8%;  font-size:clamp(1.9rem,4vw,3.8rem); animation-delay:-3s; }
     .w-watch   { right:4%; top:8%;  font-size:clamp(1.9rem,4vw,3.8rem); text-align:right; max-width:30vw; animation-delay:-6s; }
     .w-rel     { left:50%; bottom:5%; transform:translateX(-50%); font-size:clamp(1.9rem,3.6vw,3.4rem); text-align:center; animation-delay:-9s; }
     .word.w-grace { animation-name: glowGrace; }
     @keyframes glowGrace { 0%,100% { opacity:.09; } 50% { opacity:.18; } }
-    .bg-cross {
-      position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center; pointer-events: none;
-    }
-    .cross-wrap { position: relative; animation: breathe 7s ease-in-out infinite; }
-    @keyframes breathe { 0%,100% { opacity:.20; transform:scale(1); } 50% { opacity:.34; transform:scale(1.05); } }
-    .cross-glow {
-      position: absolute; inset: -80px;
-      background: radial-gradient(ellipse at center, rgba(111,227,220,0.16) 0%, transparent 65%);
-      border-radius: 50%;
-    }
-    .cross-svg { width: 340px; height: 340px; filter: drop-shadow(0 0 36px rgba(111,227,220,0.28)); }
     .bg-band {
       position: absolute; left: 0; right: 0; top: 36%; height: 280px;
       background: none;
@@ -117,7 +102,7 @@
     .verse-text {
       font-family:'Cormorant Garamond',serif; font-size:1.85rem; font-style:italic;
       font-weight:400; line-height:1.58; color:var(--text-bright);
-      text-shadow:0 2px 18px rgba(0,0,0,0.4); transition:opacity .45s; min-height:88px;
+      text-shadow:0 1px 3px rgba(2,10,20,.75), 0 2px 22px rgba(2,10,20,.6); transition:opacity .45s; min-height:88px;
     }
     .verse-ref { margin-top:.65rem; font-size:.7rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); }
     .verse-btn {
@@ -209,12 +194,12 @@
     @media(max-width:1000px){ .w-still,.w-watch{font-size:clamp(1.6rem,3.6vw,2.6rem)} }
     @media(max-width:640px){
       .clock-time{font-size:3.6rem} .verse-text{font-size:1.5rem}
-      .cross-svg{width:240px;height:240px} main{padding:1.5rem 1rem 3rem}
+      main{padding:1.5rem 1rem 3rem}
       .w-still{top:auto;bottom:40%;left:6%} .w-watch{top:auto;bottom:22%;right:6%;max-width:80vw} .w-rel{bottom:4%;white-space:normal;width:90vw}
       .w-still,.w-watch,.w-rel{font-size:2.1rem}
       .weather-inner{border-radius:20px}
     }
-    @media (prefers-reduced-motion: reduce){ .word,.bg-aurora,.cross-wrap{animation:none} }
+    @media (prefers-reduced-motion: reduce){ .word,.bg-aurora{animation:none} }
   </style>
 </head>
 <body>
@@ -232,57 +217,6 @@
     <div class="word w-still">Slow down<br>and be still</div>
     <div class="word w-watch">Watch<small>don't be distracted<br>or deceived</small></div>
     <div class="word w-rel">It's all about Relationship<small>not Performance</small></div>
-  </div>
-  <div class="bg-cross">
-    <div class="cross-wrap">
-      <div class="cross-glow"></div>
-      <svg class="cross-svg" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="faceGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%"   stop-color="#f0fffd" stop-opacity=".95"/>
-            <stop offset="45%"  stop-color="#9fe6e2" stop-opacity=".85"/>
-            <stop offset="100%" stop-color="#7f95e6" stop-opacity=".70"/>
-          </linearGradient>
-          <linearGradient id="sideGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%"   stop-color="#2f7d86" stop-opacity=".85"/>
-            <stop offset="100%" stop-color="#1f2a5c" stop-opacity=".80"/>
-          </linearGradient>
-          <linearGradient id="shineGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%"   stop-color="#ffffff" stop-opacity=".55"/>
-            <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
-          </linearGradient>
-        </defs>
-
-        <!-- globe rings (GIS meridians) -->
-        <circle cx="120" cy="120" r="100" stroke="#6fe3dc" stroke-width=".6" opacity=".22"/>
-        <ellipse cx="120" cy="120" rx="40" ry="100" stroke="#6fe3dc" stroke-width=".5" opacity=".16"/>
-        <line x1="20" y1="120" x2="220" y2="120" stroke="#6fe3dc" stroke-width=".5" opacity=".16"/>
-
-        <!-- 3D extrusion: back cross (depth) -->
-        <path d="M111 37h36v180h-36z" fill="#0c2430" opacity=".9"/>
-        <path d="M69 85h120v36H69z"   fill="#0c2430" opacity=".9"/>
-
-        <!-- side faces (right + bottom) -->
-        <path d="M138 30 147 37 147 85 138 78z"     fill="url(#sideGrad)"/>
-        <path d="M138 114 147 121 147 217 138 210z" fill="url(#sideGrad)"/>
-        <path d="M180 78 189 85 189 121 180 114z"   fill="url(#sideGrad)"/>
-        <path d="M138 114 180 114 189 121 147 121z" fill="url(#sideGrad)" opacity=".8"/>
-        <path d="M102 210 138 210 147 217 111 217z" fill="url(#sideGrad)" opacity=".8"/>
-
-        <!-- front face -->
-        <path d="M102 30h36v180h-36z" fill="url(#faceGrad)"/>
-        <path d="M60 78h120v36H60z"   fill="url(#faceGrad)"/>
-
-        <!-- bevel highlights (light from upper-left) -->
-        <path d="M102 30h36v3h-36z" fill="#ffffff" opacity=".6"/>
-        <path d="M102 30h2.5v180h-2.5z" fill="#ffffff" opacity=".45"/>
-        <path d="M60 78h120v2.5H60z" fill="#ffffff" opacity=".5"/>
-        <path d="M60 78h2.5v36H60z" fill="#ffffff" opacity=".4"/>
-
-        <!-- glass sheen sweeping down the vertical bar -->
-        <path d="M102 30h36v70h-36z" fill="url(#shineGrad)" opacity=".5"/>
-      </svg>
-    </div>
   </div>
 </div>
 
